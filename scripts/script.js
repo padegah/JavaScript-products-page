@@ -1,37 +1,59 @@
-let product = [
-    {
-        id: 1,
-        title: "Conditioner",
-        price: 10,
-        stock: 10.00,
-        description: "Wonder Gro Jamaican Black Castor Oil Hair and Scalp Conditioner",
-        imgUrl: "assets/images/conditioner.JPG"
-    },
-    {
-        id: 2,
-        title: "Hair Loss",
-        price: 20,
-        stock: 20.00,
-        description: "Genuine African Formula Shea Butter",
-        imgUrl: "assets/images/loss.JPG"
-    },
-    {
-        id: 3,
-        title: "Relaxer",
-        price: 30,
-        stock: 30.00,
-        description: "Aclo Affirm Sensitive Scalp Relaxer",
-        imgUrl: "assets/images/relaxer.JPG"
-    },
-    {
-        id: 4,
-        title: "Shampoo",
-        price: 40,
-        stock: 40.00,
-        description: "ApHogee Deep Moisture Shampoo",
-        imgUrl: "assets/images/shampoo.JPG"
+products = [];
+
+class Product {
+
+    constructor(id, title, price, stock, description, imgUrl){
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.stock = stock;
+        this.description = description;
+        this.imgUrl = imgUrl;
     }
-]
+
+    addPdt(){
+        let pdt = {
+            id: this.id,
+            title: this.title,
+            price : this.price,
+            stock: this.stock,
+            description: this.description,
+            imgUrl: this.imgUrl
+        };
+        return pdt;
+    }
+}
+
+class Conditioner extends Product{
+    super(){}
+}
+
+class HairLoss extends Product{
+    super(){}
+}
+
+class Relaxer extends Product{
+    super(){}
+}
+
+class Shampoo extends Product{
+    super(){}
+}
+
+Cond = new Conditioner(1, "Conditioner", 10.00, 10, "Wonder Gro Jamaican Black Castor Oil Hair and Scalp Conditioner", "assets/images/conditioner.JPG");
+products.push(Cond.addPdt());
+
+HLoss = new Product(2, "Hair Loss", 20.00, 20, "Genuine African Formula Shea Butter", "assets/images/loss.JPG");
+products.push(HLoss.addPdt());
+
+Rel = new Product(3, "Relaxer", 30.00, 30, "Aclo Affirm Sensitive Scalp Relaxer", "assets/images/relaxer.JPG");
+products.push(Rel.addPdt());
+
+Shamp = new Product(4, "Shampoo", 40.00, 40, "ApHogee Deep Moisture Shampoo", "assets/images/shampoo.JPG");
+products.push(Shamp.addPdt());
+
+console.log(products);
+
 
 const cartItems = document.querySelector(".cart-items");
 const cartAmt = document.querySelector(".cart-total");
@@ -43,6 +65,8 @@ function renderProducts(products){
     // console.log(products.length);
     
     for (let i=0; i<products.length; i++){
+        const space = document.createElement('br')
+        pdtPage.appendChild(space);
 
         const pdtDiv = document.createElement('div');
         pdtDiv.classList.add('product');
@@ -63,12 +87,12 @@ function renderProducts(products){
 
         const pdtPrice = document.createElement('h3');
         pdtPrice.classList.add('product-price');
-        pdtPrice.textContent = `${products[i].price}`;
+        pdtPrice.textContent = `$${products[i].price}`;
         pdtItem.appendChild(pdtPrice);
 
         const pdtStock = document.createElement('h4');
         pdtStock.classList.add('product-stock');
-        pdtStock.textContent = `${products[i].stock}`;
+        pdtStock.textContent = `${products[i].stock} items available`;
         pdtItem.appendChild(pdtStock);
 
         const pdtDescription = document.createElement('h4');
@@ -101,11 +125,12 @@ function renderProducts(products){
     }
 }
 
-renderProducts(product);
+renderProducts(products);
 
 function addToCart(id){
-    if (product[id].stock === 0){
-        alert("Sorry, " + product[id].title + " is out of stock");
+    // console.log("hi");
+    if (products[id].stock === 0){
+        alert("Sorry, " + products[id].title + " is out of stock");
         return;
     }
     decreaseStock(id);
@@ -113,12 +138,12 @@ function addToCart(id){
 }
 
 function decreaseStock(id){
-    let currStock = product[id].stock;
+    let currStock = products[id].stock;
     currStock = currStock - 1;
-    product[id].stock = currStock;
+    products[id].stock = currStock;
 
     clearPage();
-    renderProducts(product);
+    renderProducts(products);
 }
 
 function increaseCart(id){
@@ -131,20 +156,20 @@ function increaseCart(id){
 
 function cartTotal(id){
     let cartAmount = parseInt(cartAmt.innerText);
-    cartAmount = cartAmount + (product[id].price);
+    cartAmount = cartAmount + (products[id].price);
     cartAmt.innerText = parseFloat(cartAmount.toFixed(2));
 }
 
 function deleteItem(id){
-    product.splice(id,1);
+    products.splice(id,1);
     
     //reset IDs
-    for (let i=0; i<product.length; i++){
-        product[i].id =  product[i].id - 1;
+    for (let i=0; i<products.length; i++){
+        products[i].id =  products[i].id - 1;
     }
 
     clearPage();
-    renderProducts(product);
+    renderProducts(products);
 }
 
 function resetCart(product){
@@ -180,4 +205,4 @@ function clearPage(){
     pdtPage.innerHTML = '';
 }
 
-reset.addEventListener('click', resetCart.bind(null, product));
+reset.addEventListener('click', resetCart.bind(null, products));
