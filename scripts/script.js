@@ -2,7 +2,7 @@ let product = [
     {
         id: 1,
         title: "Conditioner",
-        price: 14.99,
+        price: 10,
         stock: 10,
         description: "Wonder Gro Jamaican Black Castor Oil Hair and Scalp Conditioner",
         imgUrl: "assets/images/conditioner.JPG"
@@ -10,7 +10,7 @@ let product = [
     {
         id: 2,
         title: "Hair Loss",
-        price: 24.99,
+        price: 20,
         stock: 20,
         description: "Genuine African Formula Shea Butter",
         imgUrl: "assets/images/loss.JPG"
@@ -18,7 +18,7 @@ let product = [
     {
         id: 3,
         title: "Relaxer",
-        price: 34.99,
+        price: 30,
         stock: 30,
         description: "Aclo Affirm Sensitive Scalp Relaxer",
         imgUrl: "assets/images/relaxer.JPG"
@@ -26,7 +26,7 @@ let product = [
     {
         id: 4,
         title: "Shampoo",
-        price: 44.99,
+        price: 40,
         stock: 40,
         description: "ApHogee Deep Moisture Shampoo",
         imgUrl: "assets/images/shampoo.JPG"
@@ -39,7 +39,7 @@ const reset = document.querySelector(".reset");
 const pdtPage = document.getElementById('main');
 
 function renderProducts(products){
-    console.log(products.length);
+    // console.log(products.length);
     
     for (let i=0; i<products.length; i++){
 
@@ -97,12 +97,17 @@ function renderProducts(products){
 
         let remItem = pdtPage.querySelector('.'+ remId);
         remItem.addEventListener('click', deleteItem.bind(null, id));
+        // console.log(id);
     }
 }
 
 renderProducts(product);
 
 function addToCart(id){
+    if (product[id].stock === 0){
+        alert("Sorry, " + product[id].title + " is out of stock");
+        return;
+    }
     decreaseStock(id);
     increaseCart(id);
 }
@@ -126,26 +131,31 @@ function increaseCart(id){
 
 function cartTotal(id){
     let cartAmount = parseInt(cartAmt.innerText);
-    cartTot = cartAmount + (product[id].price);
-    cartAmt.innerText = parseFloat(cartTot.toFixed(2));
+    cartAmount = cartAmount + (product[id].price);
+    cartAmt.innerText = parseFloat(cartAmount.toFixed(2));
 }
 
 function deleteItem(id){
-    state = false;
     product.splice(id,1);
+    
+    //reset IDs
+    for (let i=0; i<product.length; i++){
+        product[i].id =  product[i].id - 1;
+    }
+
+    console.log(product);
     resetCart();
     clearPage();
     renderProducts(product);
 }
 
 function resetCart(){
-    cartAmt.innerText = '0.00';
+    cartAmt.innerText = '0';
     cartItems.innerText = '0';
 }
 
 function clearPage(){
-    pdtPage.innerHTML = `<div id="main">
-    </div>`;
+    pdtPage.innerHTML = '';
 }
 
 reset.addEventListener('click', resetCart);
