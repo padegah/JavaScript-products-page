@@ -35,14 +35,13 @@ let product = [
 
 const cartItems = document.querySelector(".cart-items");
 const cartAmt = document.querySelector(".cart-total");
+const reset = document.querySelector(".reset");
+const pdtPage = document.getElementById('main');
 
-
-function renderProducts(){
-    //console.log(product[0].stock);
-
-    const pdtPage = document.getElementById('main');
+function renderProducts(products){
+    console.log(products.length);
     
-    for (let i=0; i<product.length; i++){
+    for (let i=0; i<products.length; i++){
 
         const pdtDiv = document.createElement('div');
         pdtDiv.classList.add('product');
@@ -54,30 +53,30 @@ function renderProducts(){
 
         const pdtTitle = document.createElement('h2');
         pdtTitle.classList.add('product-title');
-        pdtTitle.textContent = `${product[i].title}`;
+        pdtTitle.textContent = `${products[i].title}`;
         pdtItem.appendChild(pdtTitle);
 
         const pdtImage = document.createElement('img');
-        pdtImage.src = `${product[i].imgUrl}`;
+        pdtImage.src = `${products[i].imgUrl}`;
         pdtItem.appendChild(pdtImage);
 
         const pdtPrice = document.createElement('h3');
         pdtPrice.classList.add('product-price');
-        pdtPrice.textContent = `${product[i].price}`;
+        pdtPrice.textContent = `${products[i].price}`;
         pdtItem.appendChild(pdtPrice);
 
         const pdtStock = document.createElement('h4');
         pdtStock.classList.add('product-stock');
-        pdtStock.textContent = `${product[i].stock}`;
+        pdtStock.textContent = `${products[i].stock}`;
         pdtItem.appendChild(pdtStock);
 
         const pdtDescription = document.createElement('h4');
         pdtDescription.classList.add('product-desc');
-        pdtDescription.textContent = `${product[i].description}`;
+        pdtDescription.textContent = `${products[i].description}`;
         pdtItem.appendChild(pdtDescription);
 
-        const pdtId = 'pdt-' + `${product[i].id}`;
-        const remId = 'rem-' + `${product[i].id}`;
+        const pdtId = 'pdt-' + `${products[i].id}`;
+        const remId = 'rem-' + `${products[i].id}`;
 
         const addCart = document.createElement('input');
         addCart.setAttribute('type', 'submit');
@@ -101,8 +100,7 @@ function renderProducts(){
     }
 }
 
-renderProducts();
-
+renderProducts(product);
 
 function addToCart(id){
     decreaseStock(id);
@@ -113,11 +111,14 @@ function decreaseStock(id){
     let currStock = product[id].stock;
     currStock = currStock - 1;
     product[id].stock = currStock;
+
+    clearPage();
+    renderProducts(product);
 }
 
 function increaseCart(id){
     let cartCount = parseInt(cartItems.innerText);
-    cartCount = cartCount + 1;
+    cartCount += 1;
     cartItems.innerText = cartCount;
 
     cartTotal(id);
@@ -130,5 +131,21 @@ function cartTotal(id){
 }
 
 function deleteItem(id){
+    state = false;
     product.splice(id,1);
+    resetCart();
+    clearPage();
+    renderProducts(product);
 }
+
+function resetCart(){
+    cartAmt.innerText = '0.00';
+    cartItems.innerText = '0';
+}
+
+function clearPage(){
+    pdtPage.innerHTML = `<div id="main">
+    </div>`;
+}
+
+reset.addEventListener('click', resetCart);
