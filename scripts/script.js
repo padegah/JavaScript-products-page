@@ -3,7 +3,7 @@ let product = [
         id: 1,
         title: "Conditioner",
         price: 10,
-        stock: 10,
+        stock: 10.00,
         description: "Wonder Gro Jamaican Black Castor Oil Hair and Scalp Conditioner",
         imgUrl: "assets/images/conditioner.JPG"
     },
@@ -11,7 +11,7 @@ let product = [
         id: 2,
         title: "Hair Loss",
         price: 20,
-        stock: 20,
+        stock: 20.00,
         description: "Genuine African Formula Shea Butter",
         imgUrl: "assets/images/loss.JPG"
     },
@@ -19,7 +19,7 @@ let product = [
         id: 3,
         title: "Relaxer",
         price: 30,
-        stock: 30,
+        stock: 30.00,
         description: "Aclo Affirm Sensitive Scalp Relaxer",
         imgUrl: "assets/images/relaxer.JPG"
     },
@@ -27,7 +27,7 @@ let product = [
         id: 4,
         title: "Shampoo",
         price: 40,
-        stock: 40,
+        stock: 40.00,
         description: "ApHogee Deep Moisture Shampoo",
         imgUrl: "assets/images/shampoo.JPG"
     }
@@ -37,6 +37,7 @@ const cartItems = document.querySelector(".cart-items");
 const cartAmt = document.querySelector(".cart-total");
 const reset = document.querySelector(".reset");
 const pdtPage = document.getElementById('main');
+let cartCount = 0;
 
 function renderProducts(products){
     // console.log(products.length);
@@ -97,7 +98,6 @@ function renderProducts(products){
 
         let remItem = pdtPage.querySelector('.'+ remId);
         remItem.addEventListener('click', deleteItem.bind(null, id));
-        // console.log(id);
     }
 }
 
@@ -122,7 +122,7 @@ function decreaseStock(id){
 }
 
 function increaseCart(id){
-    let cartCount = parseInt(cartItems.innerText);
+    cartCount = parseInt(cartItems.innerText);
     cartCount += 1;
     cartItems.innerText = cartCount;
 
@@ -143,19 +143,41 @@ function deleteItem(id){
         product[i].id =  product[i].id - 1;
     }
 
-    console.log(product);
-    resetCart();
     clearPage();
     renderProducts(product);
 }
 
-function resetCart(){
-    cartAmt.innerText = '0';
+function resetCart(product){
+    cartAmt.innerText = '0.00';
     cartItems.innerText = '0';
+
+    resetStock(product);
+}
+
+function resetStock(product){
+    const cond_stock = 10;
+    const hloss_stock = 20;
+    const rel_stock = 30;
+    const shamp_stock = 40;
+
+    for (let i=0; i<product.length; i++){
+        if (product[i].title.includes("Conditioner")){
+            product[i].stock = cond_stock;
+        } else if (product[i].title.includes("Hair")){
+            product[i].stock = hloss_stock;
+        } else if (product[i].title.includes("Relaxer")){
+            product[i].stock = rel_stock;
+        } else if (product[i].title.includes("Shampoo")){
+            product[i].stock = shamp_stock;
+        }
+    }
+
+    clearPage();
+    renderProducts(product);
 }
 
 function clearPage(){
     pdtPage.innerHTML = '';
 }
 
-reset.addEventListener('click', resetCart);
+reset.addEventListener('click', resetCart.bind(null, product));
