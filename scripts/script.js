@@ -40,7 +40,7 @@ class Shampoo extends Product{
     super(){}
 }
 
-Cond = new Conditioner(1, "Conditioner", 10.00, 10, "Wonder Gro Jamaican Black Castor Oil Hair and Scalp Conditioner", "assets/images/conditioner.JPG");
+Cond = new Conditioner(1, "Conditioner", 10.00, 10, "Wonder Gro Jamaican Black Castor", "assets/images/conditioner.JPG");
 products.push(Cond.addPdt());
 
 HLoss = new Product(2, "Hair Loss", 20.00, 20, "Genuine African Formula Shea Butter", "assets/images/loss.JPG");
@@ -66,11 +66,11 @@ function renderProducts(products){
     
     for (let i=0; i<products.length; i++){
         const space = document.createElement('br')
-        pdtPage.appendChild(space);
 
         const pdtDiv = document.createElement('div');
         pdtDiv.classList.add('product');
         pdtPage.appendChild(pdtDiv);
+        // pdtPage.appendChild(space);
 
         const pdtItem = document.createElement('div');
         pdtItem.classList.add('product-item');
@@ -95,7 +95,7 @@ function renderProducts(products){
         pdtStock.textContent = `${products[i].stock} items available`;
         pdtItem.appendChild(pdtStock);
 
-        const pdtDescription = document.createElement('h4');
+        const pdtDescription = document.createElement('p');
         pdtDescription.classList.add('product-desc');
         pdtDescription.textContent = `${products[i].description}`;
         pdtItem.appendChild(pdtDescription);
@@ -155,7 +155,7 @@ function increaseCart(id){
 }
 
 function cartTotal(id){
-    let cartAmount = parseInt(cartAmt.innerText);
+    let cartAmount = parseFloat(cartAmt.innerText);
     cartAmount = cartAmount + (products[id].price);
     cartAmt.innerText = parseFloat(cartAmount.toFixed(2));
 }

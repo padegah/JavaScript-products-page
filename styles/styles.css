@@ -1,38 +1,23 @@
-/* ::-webkit-scrollbar-track {
-    -webkit--box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    border-radius: 10px;
-    background-color: #F5F5F5;
+*,
+::before,
+::after {
+  box-sizing: border-box;
 }
-
-::-webkit-scrollbar {
-    width: 10px;
-    background-color: #F5F5F5;
-}
-
-::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit--box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    background-color: #776f6f;
-} */
 
 :root {
-	--primaryColor: rgb(103, 223, 191);
+	--primaryColor: dodgerblue;;
 	--mainWhite: #fff;
 	--mainBlack: #222;
 	--mainGrey: #ececec;
 	--mainSpacing: 0.1rem;
 	--mainTransition: all 0.3s linear;
 }
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-body {
-	color: var(--mainBlack);
-	background: var(--mainWhite);
-	font-family: "Lato", sans-serif;
-}
+
+/* html {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+} */
+
 
 /* Navbar */
 .navbar {
@@ -119,100 +104,103 @@ li a {
 
 /* end of nav*/
 
+
 .main {
-    display: flexbox;
+    font-size: 80%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
+    grid-gap: 1rem;
+    margin-right: 2rem;
+}
+  
+.product-item {
+    display: flex;
+    flex-flow: column;
+    border-radius: 5px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    padding-bottom: 1rem;
+    height: 452px;
+}
+  
+/* .product-item img {
+    width: 100%;
+    /* object-fit: cover; 
+} */
+  
+.product-item h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+  
+.product-item h3 {
+    font-size: 20px;
+    color: black;
+    text-align: center;
+    margin: 0;
 }
 
-.product {
-    width: 27.3%;
-    margin: 0 3%;
-    box-shadow: 2px 2px 10px 2px rgb(121, 117, 117);
+.product-item h4 {
+    font-size: 16px;
+    color: black;
+    text-align: center;
+    margin: 0;
 }
-
-.product > img {
-    width: 85% !important;
+  
+.product-item p:first-of-type {
+    text-align: center;
+    color: black;
+    font-weight: 600;
+    margin-bottom: 0;
+    font-size: 14px;
 }
-
-.product-info {
-    border-top: 1px solid rgba(0,0,0,.125) !important;
+  
+  .product-item__content {
+    padding: 1rem;
+    text-align: center;
+    padding-top: 0;
+  }
+  
+  li {
+    margin: 0;
+  }
+  
+input, button {
+    background: dodgerblue;
+    color: white;
+    border: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font: inherit;
+    cursor: pointer;
+    outline: 0;
+    margin-top: 0.5rem;
+    font-size: 16px;
+    font-weight: 600;
 }
-
-.product-info h5 {
-    height: 50px;
-    overflow: hidden;
+  
+input:hover,
+input:active {
+    background-color: white;
+    color: dodgerblue;
 }
-
-.product-info p {
-    padding: 5px;
+  
+input:last-of-type {
+    background-color: white;
+    color: red;
 }
-
-@media (max-width: 991px) {
-    #cart > span {
-        left: 1.6em;
-    }
-
-    .product {
-        width: 40%;
-        margin: 0 5%;
-        box-shadow: 2px 2px 10px 2px rgb(121, 117, 117);
-    }
+  
+input:last-of-type:hover,
+input:last-of-type:active:hover {
+    background-color: red;
+    color: white;
 }
-
-@media (max-width: 768px) {
-    #products-list {
-        width: 100% !important;
-        margin-left: 0;
-    }
-
-    table {
-        width: 100% !important;
-    }
-
-    table img {
-        width: 100px;
-    }
-
-    table td, span, i {
-        font-size: 14px !important;
-    }
-}
-
-@media (max-width: 668px) {
-    form > input {
-        width: 60% !important;
-    }
-    
-    form > button {
-        width: 30%;
-    }
-}
-
-@media (max-width: 578px) {
-    .product {
-        width: 80%;
-        margin: 0 10%;
-        box-shadow: 2px 2px 10px 2px rgb(121, 117, 117);
-    }
-
-    .product-info p {
-        padding: 0;
-    }
-
-    table > thead > tr > th:nth-child(1), th:nth-child(2) {
-        display: none;
-    }
-
-    table > tbody > tr th {
-        display: none;
-    }
-}
-
-@media (max-width: 486px) {
-    form > input {
-        width: 100% !important;
-    }
-    
-    form > button {
-        width: 100%;
-    }
+  
+.rem-1 .rem-2 .rem-3 .rem-4 {
+    color: red;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
 }
